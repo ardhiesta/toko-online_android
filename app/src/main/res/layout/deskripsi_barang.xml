@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_barang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars[10]" />
+
+        <TextView
+            android:id="@+id/deskripsi_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi" />
+
+        <TextView
+            android:id="@+id/deskripsi_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+        <TextView
+            android:id="@+id/kategori_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kategori" />
+
+        <TextView
+            android:id="@+id/kategori_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kategori 1, kategori 2" />
+
+        <TextView
+            android:id="@+id/harga_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harga" />
+
+        <TextView
+            android:id="@+id/harga_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rp. x.xxxx.xxxx,xx" />
+
+    </LinearLayout>
+</ScrollView>
