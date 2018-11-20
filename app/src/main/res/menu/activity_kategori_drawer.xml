@@ -7,15 +7,15 @@
         <item
             android:id="@+id/nav_kategori1"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Kategori 1" />
+            android:title="Kategori Kesehatan" />
         <item
             android:id="@+id/nav_kategori2"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Kategori 2" />
+            android:title="Kategori Mobil" />
         <item
             android:id="@+id/nav_kategori3"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Kategori 3" />
+            android:title="Kategori Pakaian" />
     </group>
 
 </menu>
