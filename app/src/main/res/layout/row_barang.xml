@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/card_row_barang">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,6 +16,13 @@
         android:layout_margin="5dp"
         android:orientation="vertical"
         android:padding="5dp">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageView2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:srcCompat="@tools:sample/avatars[10]" />-->
+
         <TextView
             android:id="@+id/txt_nama"
             android:layout_width="match_parent"

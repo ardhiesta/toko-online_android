@@ -3,8 +3,7 @@ package id.web.ardhi.tokoonline;
 public class DataBarang {
     private String gambar;
     private String nama;
-    private String harga;
-    private String deskripsi;
+    private String harga;    private String deskripsi;
     private String kategori;
 
     public DataBarang(String gambar, String nama, String harga, String deskripsi, String kategori) {

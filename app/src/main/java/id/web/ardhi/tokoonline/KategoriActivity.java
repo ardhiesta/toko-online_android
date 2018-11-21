@@ -66,7 +66,7 @@ public class KategoriActivity extends AppCompatActivity
             displayBarang("pakaian");
         }
 
-        adapterBarang = new AdapterBarang(dataBarangArrayList);
+        adapterBarang = new AdapterBarang(this, dataBarangArrayList);
 
         recyclerView = findViewById(R.id.daftar_barang);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
@@ -109,7 +109,7 @@ public class KategoriActivity extends AppCompatActivity
             kheader.setText(kategori);
         } else kheader.setText("");
 
-        adapterBarang = new AdapterBarang(dataBarangArrayList);
+        adapterBarang = new AdapterBarang(this, dataBarangArrayList);
 
         recyclerView = findViewById(R.id.daftar_barang);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
