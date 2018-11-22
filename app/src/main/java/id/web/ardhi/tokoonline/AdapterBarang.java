@@ -29,19 +29,19 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterBarang.ViewHolderBarang holder, int position) {
+    public void onBindViewHolder(@NonNull final AdapterBarang.ViewHolderBarang holder, final int position) {
         holder.txtNama.setText(dataList.get(position).getNama());
         holder.txtHarga.setText(dataList.get(position).getHarga());
-        holder.txtKategori.setText("Kategori : " + dataList.get(position).getKategori());
+        holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getKategori()));
         holder.card_row_barang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent deskripsiActivity = new Intent(context, DeskripsiActivity.class);
-                deskripsiActivity.putExtra("gambar", dataList.get(0).getGambar());
-                deskripsiActivity.putExtra("nama", dataList.get(0).getNama());
-                deskripsiActivity.putExtra("harga", dataList.get(0).getHarga());
-                deskripsiActivity.putExtra("deskripsi", dataList.get(0).getDeskripsi());
-                deskripsiActivity.putExtra("kategori", dataList.get(0).getKategori());
+                deskripsiActivity.putExtra("gambar", dataList.get(position).getGambar());
+                deskripsiActivity.putExtra("nama", dataList.get(position).getNama());
+                deskripsiActivity.putExtra("harga", dataList.get(position).getHarga());
+                deskripsiActivity.putExtra("deskripsi", dataList.get(position).getDeskripsi());
+                deskripsiActivity.putExtra("kategori", dataList.get(position).getKategori());
                 context.startActivity(deskripsiActivity);
             }
         });
