@@ -9,24 +9,36 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import id.web.ardhi.tokoonline.model.Barang;
+import id.web.ardhi.tokoonline.model.Data;
+import id.web.ardhi.tokoonline.rest.ApiClient;
+import id.web.ardhi.tokoonline.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class KategoriActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
     private AdapterBarang adapterBarang;
-    private ArrayList<DataBarang> dataBarangArrayList;
-    private ArrayList<DataBarang> temp;
+    List<Barang> dataBarang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kategori);
+
+        displayBarang("semua");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,8 +47,6 @@ public class KategoriActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        displayBarang("all");
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -54,24 +64,15 @@ public class KategoriActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        TextView kheader = findViewById(R.id.kategori_title);
-        if (id == R.id.nav_kategori1) {
-            kheader.setText("Kategori : kesehatan");
-            displayBarang("kesehatan");
+        if (id == R.id.nav_semua){
+            displayBarang("semua");
+        } else if (id == R.id.nav_kategori1) {
+            displayBarang("1");
         } else if (id == R.id.nav_kategori2) {
-            kheader.setText("Kategori : mobil");
-            displayBarang("mobil");
+            displayBarang("2");
         } else if (id == R.id.nav_kategori3) {
-            kheader.setText("Kategori : pakaian");
-            displayBarang("pakaian");
+            displayBarang("3");
         }
-
-        adapterBarang = new AdapterBarang(this, dataBarangArrayList);
-
-        recyclerView = findViewById(R.id.daftar_barang);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapterBarang);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -79,41 +80,33 @@ public class KategoriActivity extends AppCompatActivity
     }
     public void displayBarang(String kategori) {
         TextView kheader = findViewById(R.id.kategori_title);
-        dataBarangArrayList = new ArrayList<>();
         switch (kategori){
-            case "all":
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Susu Bayi", "Rp. 5000,00","Deskripsi susu bayi","kesehatan"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Avanza", "Rp. 500.000.000,00","Deskripsi avanza","mobil"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Jaket Kulit", "Rp. 500.000.000,00","Deskripsi jaket kulit","pakaian"));
-                break;
-            case "kesehatan":
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Susu Bayi", "Rp. 5000,00","Deskripsi susu bayi","kesehatan"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Susu Bayi", "Rp. 5000,00","Deskripsi susu bayi","kesehatan"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Susu Bayi", "Rp. 5000,00","Deskripsi susu bayi","kesehatan"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Susu Bayi", "Rp. 5000,00","Deskripsi susu bayi","kesehatan"));
-                break;
-            case "mobil":
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Avanza", "Rp. 500.000.000,00","Deskripsi avanza","mobil"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Avanza", "Rp. 500.000.000,00","Deskripsi avanza","mobil"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Avanza", "Rp. 500.000.000,00","Deskripsi avanza","mobil"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Avanza", "Rp. 500.000.000,00","Deskripsi avanza","mobil"));
-                break;
-            case "pakaian":
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Jaket Kulit", "Rp. 500.000.000,00","Deskripsi jaket kulit","pakaian"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Jaket Kulit", "Rp. 500.000.000,00","Deskripsi jaket kulit","pakaian"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Jaket Kulit", "Rp. 500.000.000,00","Deskripsi jaket kulit","pakaian"));
-                dataBarangArrayList.add(new DataBarang("Alamat Gambar", "Jaket Kulit", "Rp. 500.000.000,00","Deskripsi jaket kulit","pakaian"));
+            case "semua":
+                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+                Call<Data> call = apiService.getData();
+
+                call.enqueue(new Callback<Data>() {
+                    @Override
+                    public void onResponse(Call<Data> call, Response<Data> response) {
+                        dataBarang = response.body().getData();
+                        adapterBarang = new AdapterBarang(KategoriActivity.this, dataBarang);
+                        recyclerView = findViewById(R.id.daftar_barang);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(adapterBarang);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Data> call, Throwable t) {
+                        Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
+                    }
+                });
                 break;
         }
-        if (!kategori.equals("all")) {
-            kheader.setText(kategori);
-        } else kheader.setText("");
-
-        adapterBarang = new AdapterBarang(this, dataBarangArrayList);
-
-        recyclerView = findViewById(R.id.daftar_barang);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapterBarang);
+        if (!kategori.equals("semua")) {
+            kheader.setVisibility(View.VISIBLE);
+            kheader.setText(String.format("Kategori %s", kategori));
+        } else kheader.setVisibility(View.GONE);
     }
 }

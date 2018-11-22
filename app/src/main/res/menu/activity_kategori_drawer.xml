@@ -5,17 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_semua"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/semua_kategori" />
+        <item
             android:id="@+id/nav_kategori1"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Kategori Kesehatan" />
+            android:title="@string/kategori_1" />
         <item
             android:id="@+id/nav_kategori2"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Kategori Mobil" />
+            android:title="@string/kategori_2" />
         <item
             android:id="@+id/nav_kategori3"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Kategori Pakaian" />
+            android:title="@string/kategori_3" />
     </group>
 
 </menu>
