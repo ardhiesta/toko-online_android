@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class KategoriActivity extends AppCompatActivity
     List<Barang> barangList;
     List<Kategori> kategoriList;
     ApiInterface apiService;
+    Call<List<Barang>> call;
 
     public KategoriActivity() {
         apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -57,7 +60,44 @@ public class KategoriActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         displayKategori(navigationView);
-        displayBarang(R.id.nav_noKategori);
+        displayBarang(R.id.nav_noKategori,"");
+
+        Button searchBtn = findViewById(R.id.search_btn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText cariText = findViewById(R.id.cari);
+                TextView kheader = findViewById(R.id.kategori_title);
+                final TextView searchKet = findViewById(R.id.search_ket);
+                if (!cariText.getText().toString().equals("")) {
+                    kheader.setVisibility(View.VISIBLE);
+                    kheader.setText(String.format("Hasil pencarian \"%s\"", cariText.getText()));
+                    call = apiService.getAPIDataWithSearch(cariText.getText().toString());
+                    call.enqueue(new Callback<List<Barang>>() {
+                        @Override
+                        public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
+                            barangList = response.body();
+                            if (barangList.size() == 0) {
+                                searchKet.setVisibility(View.VISIBLE);
+                                searchKet.setText("Pencarian Tidak Ditemukan.....\n");
+                            } else {
+                                searchKet.setVisibility(View.GONE);
+                                adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
+                                recyclerView = findViewById(R.id.barang_list);
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
+                                recyclerView.setLayoutManager(layoutManager);
+                                recyclerView.setAdapter(adapterBarang);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
+                            Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
     }
     @Override
     public void onBackPressed() {
@@ -74,55 +114,42 @@ public class KategoriActivity extends AppCompatActivity
         int id = item.getItemId();
         item.setCheckable(true);
         item.setChecked(true);
-        displayBarang(id);
+        displayBarang(id, item.getTitle().toString());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void displayBarang(int id) {
+    public void displayBarang(int id, String title) {
+        TextView searchKet = findViewById(R.id.search_ket);
         TextView kheader = findViewById(R.id.kategori_title);
-        final NavigationView navigationView = findViewById(R.id.nav_view);
+        EditText cariText = findViewById(R.id.cari);
+        searchKet.setVisibility(View.GONE);
+        cariText.setText("");
         if (id != R.id.nav_noKategori) {
             kheader.setVisibility(View.VISIBLE);
-            kheader.setText(String.format("Kategori %s", navigationView.getMenu().getItem(id).getTitle()));
-            Call<List<Barang>> call = apiService.getAPIDataWithKategori(id);
-            call.enqueue(new Callback<List<Barang>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
-                    barangList = response.body();
-                    adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
-                    recyclerView = findViewById(R.id.barang_list);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapterBarang);
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
-                    Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
-                }
-            });
+            kheader.setText(String.format("Kategori %s", title));
+            call = apiService.getAPIDataWithKategori(id);
         } else {
             kheader.setVisibility(View.GONE);
-            Call<List<Barang>> call = apiService.getAPIData();
-            call.enqueue(new Callback<List<Barang>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
-                    barangList = response.body();
-                    adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
-                    recyclerView = findViewById(R.id.barang_list);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapterBarang);
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
-                    Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
-                }
-            });
+            call = apiService.getAPIData();
         }
+        call.enqueue(new Callback<List<Barang>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
+                barangList = response.body();
+                adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
+                recyclerView = findViewById(R.id.barang_list);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(adapterBarang);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
+                Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void displayKategori(final NavigationView navigationView) {

@@ -10,4 +10,6 @@
     <string name="noKategori">Semua Kategori</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="kategori">Kategori</string>
+    <string name="cari_hint">Mau belanja apa?</string>
+    <string name="search_btn_title">Cari</string>
 </resources>

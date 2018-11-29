@@ -17,4 +17,7 @@ public interface ApiInterface {
 
     @GET("toko-online/public/api/produk/kategori/{id_kategori}")
     Call<List<Barang>> getAPIDataWithKategori(@Path("id_kategori") int id_kategori);
+
+    @GET("toko-online/public/api/produk/nama/{keyword}")
+    Call<List<Barang>> getAPIDataWithSearch(@Path("keyword") String keyword);
 }
