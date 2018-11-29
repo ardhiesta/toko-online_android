@@ -3,23 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/nav_menu">
         <item
-            android:id="@+id/nav_semua"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/semua_kategori" />
-        <item
-            android:id="@+id/nav_kategori1"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/kategori_1" />
-        <item
-            android:id="@+id/nav_kategori2"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/kategori_2" />
-        <item
-            android:id="@+id/nav_kategori3"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/kategori_3" />
+            android:id="@+id/nav_noKategori"
+            android:title="@string/noKategori" />
     </group>
-
 </menu>

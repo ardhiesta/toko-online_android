@@ -7,10 +7,7 @@
     <string name="nav_header_subtitle">Kami tidak menjual apa-apa</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="content_desc">Your Image</string>
-    <string name="kategori_1">Kategori 1</string>
-    <string name="kategori_2">Kategori 2</string>
-    <string name="kategori_3">Kategori 3</string>
-    <string name="semua_kategori">Semua Kategori</string>
+    <string name="noKategori">Semua Kategori</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="kategori">Kategori</string>
 </resources>
