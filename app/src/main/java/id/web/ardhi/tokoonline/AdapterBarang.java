@@ -12,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import id.web.ardhi.tokoonline.model.Barang;
 
@@ -35,7 +38,9 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final AdapterBarang.ViewHolderBarang holder, final int position) {
         holder.txtNama.setText(dataList.get(position).getNamaProduk());
-        holder.txtHarga.setText(String.format("Rp. %s", dataList.get(position).getHarga()));
+        holder.txtHarga.setText(String.format("Rp. %s",
+                NumberFormat.getNumberInstance(Locale.ITALY).format(
+                dataList.get(position).getHarga())));
         holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getIdKategori()));
         Picasso.get().load(dataList.get(position).getGambar()).into(holder.kat_gambar);
         holder.card_row_barang.setOnClickListener(new View.OnClickListener() {

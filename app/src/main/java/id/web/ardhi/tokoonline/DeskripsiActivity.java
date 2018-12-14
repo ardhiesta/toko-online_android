@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class DeskripsiActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +28,8 @@ public class DeskripsiActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Picasso.get().load(intent.getStringExtra("gambar")).into(des_img);
         nam_txt.setText(intent.getStringExtra("nama"));
-        har_txt.setText(String.format("Rp. %s",intent.getStringExtra("harga")));
+        har_txt.setText(String.format("Rp. %s",
+                NumberFormat.getNumberInstance(Locale.ITALY).format(Integer.parseInt(intent.getStringExtra("harga")))));
         des_txt.setText(intent.getStringExtra("deskripsi"));
         kat_txt.setText(intent.getStringExtra("kategori"));
     }
