@@ -1,9 +1,11 @@
 package id.web.ardhi.tokoonline;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +27,10 @@ public class DeskripsiActivity extends AppCompatActivity {
         TextView des_txt = findViewById(R.id.des_txt);
         TextView kat_txt = findViewById(R.id.kat_txt);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
-        Picasso.get().load(intent.getStringExtra("gambar")).into(des_img);
+        Picasso.get().load("http://198.46.207.101/toko-online/uploads"+intent.getStringExtra("gambar")).into(des_img);
         nam_txt.setText(intent.getStringExtra("nama"));
         har_txt.setText(String.format("Rp. %s",
                 NumberFormat.getNumberInstance(Locale.ITALY).format(Integer.parseInt(intent.getStringExtra("harga")))));
@@ -40,4 +44,14 @@ public class DeskripsiActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

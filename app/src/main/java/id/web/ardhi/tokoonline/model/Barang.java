@@ -30,6 +30,13 @@ public class Barang {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("kategori")
+    @Expose
+    private Kategori kategori;
+
+    public Kategori getKategori(){
+        return kategori;
+    }
 
     public Integer getIdProduk() {
         return idProduk;

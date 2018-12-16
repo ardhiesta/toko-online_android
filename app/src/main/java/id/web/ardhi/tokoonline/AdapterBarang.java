@@ -41,8 +41,8 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
         holder.txtHarga.setText(String.format("Rp. %s",
                 NumberFormat.getNumberInstance(Locale.ITALY).format(
                 dataList.get(position).getHarga())));
-        holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getIdKategori()));
-        Picasso.get().load(dataList.get(position).getGambar()).into(holder.kat_gambar);
+        holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getKategori().getNamaKategori()));
+        Picasso.get().load("http://198.46.207.101/toko-online/uploads"+dataList.get(position).getGambar()).into(holder.kat_gambar);
         holder.card_row_barang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
                 deskripsiActivity.putExtra("nama", dataList.get(position).getNamaProduk());
                 deskripsiActivity.putExtra("harga", dataList.get(position).getHarga().toString());
                 deskripsiActivity.putExtra("deskripsi", dataList.get(position).getDeskripsi());
-                deskripsiActivity.putExtra("kategori", dataList.get(position).getIdKategori().toString());
+                deskripsiActivity.putExtra("kategori", dataList.get(position).getKategori().getNamaKategori().toString());
                 context.startActivity(deskripsiActivity);
             }
         });
