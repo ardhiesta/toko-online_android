@@ -42,7 +42,7 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
                 NumberFormat.getNumberInstance(Locale.ITALY).format(
                 dataList.get(position).getHarga())));
         holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getKategori().getNamaKategori()));
-        String urlGambar = "http://198.46.207.101/toko-online/public/uploads/"+dataList.get(position).getGambar();
+        String urlGambar = "http://x.y.z/toko-online/public/uploads/"+dataList.get(position).getGambar();
         Picasso.get()
                 .load(urlGambar).resize(256, 256)
                 .into(holder.kat_gambar);
