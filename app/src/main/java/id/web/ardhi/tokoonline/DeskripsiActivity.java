@@ -30,7 +30,12 @@ public class DeskripsiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        Picasso.get().load("http://198.46.207.101/toko-online/uploads"+intent.getStringExtra("gambar")).into(des_img);
+        String urlGambar = "http://198.46.207.101/toko-online/public/uploads/"+intent.getStringExtra("gambar");
+        Picasso.get().load(urlGambar)
+                .resize(256, 256)
+//                .placeholder(R.drawable.baseline_cached_24)
+//                .error(R.drawable.baseline_error_outline_24)
+                .into(des_img);
         nam_txt.setText(intent.getStringExtra("nama"));
         har_txt.setText(String.format("Rp. %s",
                 NumberFormat.getNumberInstance(Locale.ITALY).format(Integer.parseInt(intent.getStringExtra("harga")))));

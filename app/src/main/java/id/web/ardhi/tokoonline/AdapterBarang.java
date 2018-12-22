@@ -42,7 +42,10 @@ public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolder
                 NumberFormat.getNumberInstance(Locale.ITALY).format(
                 dataList.get(position).getHarga())));
         holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getKategori().getNamaKategori()));
-        Picasso.get().load("http://198.46.207.101/toko-online/uploads"+dataList.get(position).getGambar()).into(holder.kat_gambar);
+        String urlGambar = "http://198.46.207.101/toko-online/public/uploads/"+dataList.get(position).getGambar();
+        Picasso.get()
+                .load(urlGambar).resize(256, 256)
+                .into(holder.kat_gambar);
         holder.card_row_barang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
