@@ -17,26 +17,26 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-import id.web.ardhi.tokoonline.model.Barang;
+import id.web.ardhi.tokoonline.model.Produk;
 
-public class AdapterBarang extends RecyclerView.Adapter<AdapterBarang.ViewHolderBarang> {
-    private List<Barang> dataList;
+public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolderBarang> {
+    private List<Produk> dataList;
     Context context;
-    AdapterBarang(Context context, List<Barang> dataList) {
+    AdapterProduk(Context context, List<Produk> dataList) {
         this.dataList = dataList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public AdapterBarang.ViewHolderBarang onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public AdapterProduk.ViewHolderBarang onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.row_barang, parent, false);
         return new ViewHolderBarang(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterBarang.ViewHolderBarang holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterProduk.ViewHolderBarang holder, final int position) {
         holder.txtNama.setText(dataList.get(position).getNamaProduk());
         holder.txtHarga.setText(String.format("Rp. %s",
                 NumberFormat.getNumberInstance(Locale.ITALY).format(

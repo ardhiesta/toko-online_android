@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import id.web.ardhi.tokoonline.model.Barang;
+import id.web.ardhi.tokoonline.model.Produk;
 import id.web.ardhi.tokoonline.model.Kategori;
 import id.web.ardhi.tokoonline.rest.ApiClient;
 import id.web.ardhi.tokoonline.rest.ApiInterface;
@@ -32,11 +32,11 @@ public class KategoriActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
-    private AdapterBarang adapterBarang;
-    List<Barang> barangList;
+    private AdapterProduk adapterBarang;
+    List<Produk> produkList;
     List<Kategori> kategoriList;
     ApiInterface apiService;
-    Call<List<Barang>> call;
+    Call<List<Produk>> call;
 
     public KategoriActivity() {
         apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -73,16 +73,16 @@ public class KategoriActivity extends AppCompatActivity
                     kheader.setVisibility(View.VISIBLE);
                     kheader.setText(String.format("Hasil pencarian \"%s\"", cariText.getText()));
                     call = apiService.getAPIDataWithSearch(cariText.getText().toString());
-                    call.enqueue(new Callback<List<Barang>>() {
+                    call.enqueue(new Callback<List<Produk>>() {
                         @Override
-                        public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
-                            barangList = response.body();
-                            if (barangList.size() == 0) {
+                        public void onResponse(@NonNull Call<List<Produk>> call, @NonNull Response<List<Produk>> response) {
+                            produkList = response.body();
+                            if (produkList.size() == 0) {
                                 searchKet.setVisibility(View.VISIBLE);
                                 searchKet.setText("Pencarian Tidak Ditemukan.....\n");
                             } else {
                                 searchKet.setVisibility(View.GONE);
-                                adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
+                                adapterBarang = new AdapterProduk(KategoriActivity.this, produkList);
                                 recyclerView = findViewById(R.id.barang_list);
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
                                 recyclerView.setLayoutManager(layoutManager);
@@ -91,7 +91,7 @@ public class KategoriActivity extends AppCompatActivity
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
+                        public void onFailure(@NonNull Call<List<Produk>> call, @NonNull Throwable t) {
                             Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
                         }
                     });
@@ -134,11 +134,11 @@ public class KategoriActivity extends AppCompatActivity
             kheader.setVisibility(View.GONE);
             call = apiService.getAPIData();
         }
-        call.enqueue(new Callback<List<Barang>>() {
+        call.enqueue(new Callback<List<Produk>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Barang>> call, @NonNull Response<List<Barang>> response) {
-                barangList = response.body();
-                adapterBarang = new AdapterBarang(KategoriActivity.this, barangList);
+            public void onResponse(@NonNull Call<List<Produk>> call, @NonNull Response<List<Produk>> response) {
+                produkList = response.body();
+                adapterBarang = new AdapterProduk(KategoriActivity.this, produkList);
                 recyclerView = findViewById(R.id.barang_list);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
                 recyclerView.setLayoutManager(layoutManager);
@@ -146,7 +146,7 @@ public class KategoriActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Barang>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Produk>> call, @NonNull Throwable t) {
                 Toast.makeText(KategoriActivity.this, "Silahkan Periksa Koneksi Internet Anda", Toast.LENGTH_LONG).show();
             }
         });

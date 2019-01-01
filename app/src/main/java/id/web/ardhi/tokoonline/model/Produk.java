@@ -4,7 +4,7 @@ package id.web.ardhi.tokoonline.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Barang {
+public class Produk {
 
     @SerializedName("id_produk")
     @Expose

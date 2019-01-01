@@ -2,7 +2,7 @@ package id.web.ardhi.tokoonline.rest;
 
 import java.util.List;
 
-import id.web.ardhi.tokoonline.model.Barang;
+import id.web.ardhi.tokoonline.model.Produk;
 import id.web.ardhi.tokoonline.model.Kategori;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,11 +13,11 @@ public interface ApiInterface {
     Call<List<Kategori>> getAPIKategori();
 
     @GET("toko-online/public/api/produk")
-    Call<List<Barang>> getAPIData();
+    Call<List<Produk>> getAPIData();
 
     @GET("toko-online/public/api/produk/kategori/{id_kategori}")
-    Call<List<Barang>> getAPIDataWithKategori(@Path("id_kategori") int id_kategori);
+    Call<List<Produk>> getAPIDataWithKategori(@Path("id_kategori") int id_kategori);
 
     @GET("toko-online/public/api/produk/nama/{keyword}")
-    Call<List<Barang>> getAPIDataWithSearch(@Path("keyword") String keyword);
+    Call<List<Produk>> getAPIDataWithSearch(@Path("keyword") String keyword);
 }
