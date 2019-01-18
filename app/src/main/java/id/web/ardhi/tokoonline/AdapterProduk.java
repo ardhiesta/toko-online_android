@@ -19,7 +19,7 @@ import java.util.Locale;
 
 import id.web.ardhi.tokoonline.model.Produk;
 
-public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolderBarang> {
+public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolderProduk> {
     private List<Produk> dataList;
     Context context;
     AdapterProduk(Context context, List<Produk> dataList) {
@@ -29,14 +29,14 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolder
 
     @NonNull
     @Override
-    public AdapterProduk.ViewHolderBarang onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public AdapterProduk.ViewHolderProduk onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.row_barang, parent, false);
-        return new ViewHolderBarang(view);
+        View view = layoutInflater.inflate(R.layout.row_produk, parent, false);
+        return new ViewHolderProduk(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterProduk.ViewHolderBarang holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterProduk.ViewHolderProduk holder, final int position) {
         holder.txtNama.setText(dataList.get(position).getNamaProduk());
         holder.txtHarga.setText(String.format("Rp. %s",
                 NumberFormat.getNumberInstance(Locale.ITALY).format(
@@ -46,7 +46,7 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolder
         Picasso.get()
                 .load(urlGambar).resize(256, 256)
                 .into(holder.kat_gambar);
-        holder.card_row_barang.setOnClickListener(new View.OnClickListener() {
+        holder.card_row_produk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent deskripsiActivity = new Intent(context, DeskripsiActivity.class);
@@ -65,19 +65,19 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolder
         return (dataList != null) ? dataList.size() : 0;
     }
 
-    class ViewHolderBarang extends RecyclerView.ViewHolder{
+    class ViewHolderProduk extends RecyclerView.ViewHolder{
         private TextView txtNama;
         private TextView txtHarga;
         private TextView txtKategori;
         private ImageView kat_gambar;
-        private CardView card_row_barang;
-        ViewHolderBarang(@NonNull View itemView) {
+        private CardView card_row_produk;
+        ViewHolderProduk(@NonNull View itemView) {
             super(itemView);
             txtNama = (TextView) itemView.findViewById(R.id.txt_nama);
             txtHarga = (TextView) itemView.findViewById(R.id.txt_harga);
             txtKategori = (TextView) itemView.findViewById(R.id.txt_kategori);
             kat_gambar = (ImageView) itemView.findViewById(R.id.kat_gambar);
-            card_row_barang = (CardView) itemView.findViewById(R.id.card_row_barang);
+            card_row_produk = (CardView) itemView.findViewById(R.id.card_row_produk);
         }
     }
 }

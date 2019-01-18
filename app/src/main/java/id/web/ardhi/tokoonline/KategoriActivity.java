@@ -32,7 +32,7 @@ public class KategoriActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
-    private AdapterProduk adapterBarang;
+    private AdapterProduk adapterProduk;
     List<Produk> produkList;
     List<Kategori> kategoriList;
     ApiInterface apiService;
@@ -60,7 +60,7 @@ public class KategoriActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         displayKategori(navigationView);
-        displayBarang(R.id.nav_noKategori,"");
+        displayProduk(R.id.nav_noKategori,"");
 
         Button searchBtn = findViewById(R.id.search_btn);
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,11 +82,11 @@ public class KategoriActivity extends AppCompatActivity
                                 searchKet.setText("Pencarian Tidak Ditemukan.....\n");
                             } else {
                                 searchKet.setVisibility(View.GONE);
-                                adapterBarang = new AdapterProduk(KategoriActivity.this, produkList);
-                                recyclerView = findViewById(R.id.barang_list);
+                                adapterProduk = new AdapterProduk(KategoriActivity.this, produkList);
+                                recyclerView = findViewById(R.id.produk_list);
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
                                 recyclerView.setLayoutManager(layoutManager);
-                                recyclerView.setAdapter(adapterBarang);
+                                recyclerView.setAdapter(adapterProduk);
                             }
                         }
 
@@ -114,13 +114,13 @@ public class KategoriActivity extends AppCompatActivity
         int id = item.getItemId();
         item.setCheckable(true);
         item.setChecked(true);
-        displayBarang(id, item.getTitle().toString());
+        displayProduk(id, item.getTitle().toString());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void displayBarang(int id, String title) {
+    public void displayProduk(int id, String title) {
         TextView searchKet = findViewById(R.id.search_ket);
         TextView kheader = findViewById(R.id.kategori_title);
         EditText cariText = findViewById(R.id.cari);
@@ -138,11 +138,11 @@ public class KategoriActivity extends AppCompatActivity
             @Override
             public void onResponse(@NonNull Call<List<Produk>> call, @NonNull Response<List<Produk>> response) {
                 produkList = response.body();
-                adapterBarang = new AdapterProduk(KategoriActivity.this, produkList);
-                recyclerView = findViewById(R.id.barang_list);
+                adapterProduk = new AdapterProduk(KategoriActivity.this, produkList);
+                recyclerView = findViewById(R.id.produk_list);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(KategoriActivity.this);
                 recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapterBarang);
+                recyclerView.setAdapter(adapterProduk);
             }
 
             @Override
