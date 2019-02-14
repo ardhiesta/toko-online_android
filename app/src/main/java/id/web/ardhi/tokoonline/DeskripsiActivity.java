@@ -32,7 +32,7 @@ public class DeskripsiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String urlGambar = ApiClient.BASE_URL+ "/uploads/"+intent.getStringExtra("gambar");
+        String urlGambar = ApiClient.BASE_URL+ "uploads/"+intent.getStringExtra("gambar");
         Picasso.get().load(urlGambar)
                 .resize(256, 256)
 //                .placeholder(R.drawable.baseline_cached_24)
