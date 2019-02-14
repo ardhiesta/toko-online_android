@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 import id.web.ardhi.tokoonline.model.Produk;
+import id.web.ardhi.tokoonline.rest.ApiClient;
 
 public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolderBarang> {
     private List<Produk> dataList;
@@ -42,7 +43,7 @@ public class AdapterProduk extends RecyclerView.Adapter<AdapterProduk.ViewHolder
                 NumberFormat.getNumberInstance(Locale.ITALY).format(
                 dataList.get(position).getHarga())));
         holder.txtKategori.setText(String.format("Kategori : %s", dataList.get(position).getKategori().getNamaKategori()));
-        String urlGambar = "http://x.y.z/toko-online/public/uploads/"+dataList.get(position).getGambar();
+        String urlGambar = ApiClient.BASE_URL+"/uploads/"+dataList.get(position).getGambar();
         Picasso.get()
                 .load(urlGambar).resize(256, 256)
                 .into(holder.kat_gambar);
