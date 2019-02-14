@@ -9,15 +9,15 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
-    @GET("toko-online/public/api/kategori")
+    @GET("api/kategori")
     Call<List<Kategori>> getAPIKategori();
 
-    @GET("toko-online/public/api/produk")
+    @GET("api/produk")
     Call<List<Produk>> getAPIData();
 
-    @GET("toko-online/public/api/produk/kategori/{id_kategori}")
+    @GET("api/produk/kategori/{id_kategori}")
     Call<List<Produk>> getAPIDataWithKategori(@Path("id_kategori") int id_kategori);
 
-    @GET("toko-online/public/api/produk/nama/{keyword}")
+    @GET("api/produk/nama/{keyword}")
     Call<List<Produk>> getAPIDataWithSearch(@Path("keyword") String keyword);
 }
