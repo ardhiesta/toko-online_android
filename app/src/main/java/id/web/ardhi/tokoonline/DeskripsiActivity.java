@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import id.web.ardhi.tokoonline.rest.ApiClient;
+
 public class DeskripsiActivity extends AppCompatActivity {
 
     @Override
@@ -30,7 +32,7 @@ public class DeskripsiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String urlGambar = "http://x.y.z/toko-online/public/uploads/"+intent.getStringExtra("gambar");
+        String urlGambar = ApiClient.BASE_URL+ "/uploads/"+intent.getStringExtra("gambar");
         Picasso.get().load(urlGambar)
                 .resize(256, 256)
 //                .placeholder(R.drawable.baseline_cached_24)
